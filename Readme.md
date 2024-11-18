@@ -1,6 +1,6 @@
 Instructions:
 ```
-sudo apt install python3-requests
+sudo apt update && sudo apt install python3-requests -y
 git clone https://github.com/fuomag9/GithubSSH.git /opt/GithubSSH
 sudo chown root:root /opt/GithubSSH
 sudo chmod +x /opt/GithubSSH/main.py
