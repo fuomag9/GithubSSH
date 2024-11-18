@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import os
 import sys
 import requests
-from pathlib import Path
-import pwd
 
 # Explicit "allow" list
 ALLOWED_USERS = ["fuomag9","root"]
@@ -26,22 +23,6 @@ def fetch_github_keys(username):
         print(response.text)
     except requests.RequestException as e:
         raise ConnectionError(f"Error fetching keys from GitHub: {e}")
-
-def write_authorized_keys(home_dir, public_keys):
-    """Write public keys to the user's authorized_keys file."""
-    ssh_dir = home_dir / ".ssh"
-    authorized_keys_file = ssh_dir / "authorized_keys2"
-
-    # Ensure .ssh directory exists with correct permissions
-    ssh_dir.mkdir(mode=0o700, exist_ok=True)
-    os.chown(ssh_dir, os.getuid(), os.getgid())  # Owner should be the user
-
-    # Write keys to authorized_keys2
-    with open(authorized_keys_file, "w", encoding="utf-8") as f:
-        f.write(public_keys)
-
-    # Set correct permissions
-    authorized_keys_file.chmod(0o600)
 
 def main():
     if len(sys.argv) < 2:
